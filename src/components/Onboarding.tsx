@@ -19,25 +19,28 @@ function markDone() {
 
 const SLIDES = [
   {
-    eyebrow: "Welcome · Mabuhay",
+    eyebrow: "Mabuhay · Welcome",
     title: "Philippine stories on the map",
-    body: "AnoTara turns Metro Manila into a story-first explorer. Every pin opens with the cultural meaning, not just the directions.",
+    body: "AnoTara turns Metro Manila into a story-first explorer. Every pin opens with the cultural meaning — hindi lang directions.",
     icon: MapPin,
-    tint: "from-accent/20 to-cream-strong",
+    tint: "from-accent/25 to-cream-strong",
+    useLogo: true,
   },
   {
-    eyebrow: "Listen · Pakinggan",
+    eyebrow: "Pakinggan · Listen",
     title: "Read the story. Hear it aloud.",
     body: "Tap any place to read its kuwento. Press Play to listen — perfect kapag naglalakad ka at gusto mong makinig na lang.",
     icon: BookOpen,
     tint: "from-leaf/20 to-cream-strong",
+    useLogo: false,
   },
   {
-    eyebrow: "Local · Tara",
+    eyebrow: "Tara · Local guide",
     title: "Ask a Filipino local guide",
     body: "Powered by real AI — ask anything, get answers grounded in the place's actual history and culture. Walking buddy on demand.",
     icon: Sparkles,
     tint: "from-heritage/15 to-cream-strong",
+    useLogo: false,
   },
 ];
 
@@ -74,9 +77,17 @@ export default function Onboarding({ onDone }: { onDone: () => void }) {
       <div
         className={`relative flex w-full max-w-sm flex-col items-center rounded-3xl bg-gradient-to-br ${slide.tint} p-6 text-center shadow-xl`}
       >
-        <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-accent shadow-sm">
-          <Icon className="h-6 w-6" />
-        </div>
+        {slide.useLogo ? (
+          <img
+            src="/logo.png"
+            alt="AnoTara"
+            className="mb-3 h-24 w-24 rounded-full object-cover shadow-md ring-4 ring-cream"
+          />
+        ) : (
+          <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-cream text-accent shadow-sm">
+            <Icon className="h-6 w-6" />
+          </div>
+        )}
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
           {slide.eyebrow}
         </p>

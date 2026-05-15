@@ -44,6 +44,7 @@ export default function App() {
     () => new Map(),
   );
   const [imageLoading, setImageLoading] = useState(false);
+  const [historicLoading, setHistoricLoading] = useState(false);
   const [routeStops, setRouteStops] = useState<RouteStop[] | null>(null);
   const { saved, toggle, isSaved } = useSaved();
 
@@ -65,34 +66,43 @@ export default function App() {
   }, [visiblePlaces, selectedId]);
 
   useEffect(() => {
-    if (!selectedId || imageCache.has(selectedId)) return;
+    if (!selectedId) return;
 
     let cancelled = false;
     const place = destinationById.get(selectedId);
     if (!place) return;
 
-    setImageLoading(true);
-    fetchCommonsImage(place.imageQuery).then((result) => {
-      if (cancelled) return;
-      if (result) {
-        setImageCache((prev) => {
+    const loadHistoric = (modernUrl?: string) => {
+      if (historicCache.has(selectedId)) return;
+      setHistoricLoading(true);
+      fetchHistoricImage(place, modernUrl).then((hist) => {
+        if (cancelled) return;
+        setHistoricCache((prev) => {
           const next = new Map(prev);
-          next.set(selectedId, result);
+          next.set(selectedId, hist);
           return next;
         });
-        if (!historicCache.has(selectedId)) {
-          fetchHistoricImage(place.imageQuery, result.imageUrl).then((hist) => {
-            if (cancelled) return;
-            setHistoricCache((prev) => {
-              const next = new Map(prev);
-              next.set(selectedId, hist);
-              return next;
-            });
+        setHistoricLoading(false);
+      });
+    };
+
+    if (!imageCache.has(selectedId)) {
+      setImageLoading(true);
+      fetchCommonsImage(place.imageQuery).then((result) => {
+        if (cancelled) return;
+        if (result) {
+          setImageCache((prev) => {
+            const next = new Map(prev);
+            next.set(selectedId, result);
+            return next;
           });
+          loadHistoric(result.imageUrl);
         }
-      }
-      setImageLoading(false);
-    });
+        setImageLoading(false);
+      });
+    } else {
+      loadHistoric(imageCache.get(selectedId)?.imageUrl);
+    }
 
     if (!galleryCache.has(selectedId)) {
       fetchCommonsGallery(place.imageQuery, 6).then((gallery) => {
@@ -148,6 +158,7 @@ export default function App() {
             selectedId={selectedId}
             routeStops={routeStops}
             onSelect={handleSelect}
+            onMapTap={() => panelOpen && setPanelOpen(false)}
           />
           <TopNav
             searchQuery={searchQuery}
@@ -176,6 +187,9 @@ export default function App() {
               panelView={panelView}
               image={imageCache.get(selected.id)}
               historicImage={historicCache.get(selected.id) ?? undefined}
+              historicLoading={
+                historicLoading && !historicCache.has(selected.id)
+              }
               gallery={galleryCache.get(selected.id) ?? []}
               imageLoading={imageLoading && !imageCache.has(selected.id)}
               imageCache={imageCache}

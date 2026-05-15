@@ -8,6 +8,7 @@ export const destinations: Destination[] = [
     tags: ["walled city", "spanish colonial", "unesco", "walking", "must visit"],
     coordinates: [14.5896, 120.9747],
     imageQuery: "Intramuros Manila Philippines",
+    historicCommonsFile: "Manila Walled City Destruction May 1945.jpg",
     wikiTitle: "Intramuros",
     shortDescription:
       "Manila's historic walled city — churches, plazas, museums, and colonial stories in one walkable district.",
@@ -150,6 +151,7 @@ export const destinations: Destination[] = [
     tags: ["rizal", "citadel", "intramuros", "national hero"],
     coordinates: [14.5941, 120.9708],
     imageQuery: "Fort Santiago Intramuros Manila",
+    historicCommonsFile: "Fort Santiago 1880 gate.jpg",
     wikiTitle: "Fort Santiago",
     shortDescription:
       "Historic citadel at the Pasig River mouth, tied to Jose Rizal and Manila's colonial defenses.",
@@ -270,6 +272,7 @@ export const destinations: Destination[] = [
     tags: ["luneta", "rizal monument", "public space", "national park"],
     coordinates: [14.5826, 120.9787],
     imageQuery: "Rizal Park Manila monument",
+    historicImageQuery: "Luneta Park Manila 1900 photograph",
     wikiTitle: "Rizal Park",
     shortDescription:
       "Manila's grand civic park and home of the Rizal Monument — where national memory meets everyday city life.",
@@ -396,6 +399,7 @@ export const destinations: Destination[] = [
     tags: ["art", "spoliarium", "luna", "national museum", "ermita"],
     coordinates: [14.5868, 120.9812],
     imageQuery: "National Museum of Fine Arts Manila",
+    historicImageQuery: "Old Legislative Building Manila 1930",
     wikiTitle: "National Museum of Fine Arts (Manila)",
     shortDescription:
       "Philippine art and national masterpieces inside the historic Legislative Building near Rizal Park.",
@@ -619,6 +623,7 @@ export const destinations: Destination[] = [
     tags: ["chinatown", "food crawl", "lumpia", "heritage", "shopping"],
     coordinates: [14.5995, 120.9742],
     imageQuery: "Binondo Chinatown Manila",
+    historicImageQuery: "Binondo Church Manila old photograph",
     wikiTitle: "Binondo",
     shortDescription:
       "The world's oldest Chinatown — narrow streets, heritage temples, and some of Manila's best food.",
@@ -735,6 +740,7 @@ export const destinations: Destination[] = [
     tags: ["art deco", "pre-war", "heritage street", "first avenue"],
     coordinates: [14.5978, 120.9789],
     imageQuery: "Escolta Street Manila heritage",
+    historicImageQuery: "Escolta Street Manila 1920",
     wikiTitle: "Escolta Street",
     shortDescription:
       "Manila's former 'Wall Street' — art deco facades, hidden courtyards, and pre-war glamour waiting to be rediscovered.",
@@ -843,6 +849,7 @@ export const destinations: Destination[] = [
     tags: ["basilica", "plaza roma", "intramuros", "catholic"],
     coordinates: [14.5913, 120.9736],
     imageQuery: "Manila Cathedral facade Intramuros",
+    historicImageQuery: "Manila Cathedral Intramuros ruins 1945",
     wikiTitle: "Manila Cathedral",
     shortDescription:
       "The cathedral of the Archdiocese of Manila, facing Plaza Roma at the heart of Intramuros.",
@@ -967,6 +974,7 @@ export const destinations: Destination[] = [
     tags: ["unesco", "baroque", "intramuros", "museum"],
     coordinates: [14.5881, 120.9742],
     imageQuery: "San Agustin Church Manila UNESCO",
+    historicCommonsFile: "San Agustin Church, Manila after the 1880 earthquake.jpg",
     wikiTitle: "San Agustin Church (Manila)",
     shortDescription:
       "UNESCO-listed Baroque church and museum — one of the oldest stone churches in the Philippines.",
@@ -1086,6 +1094,7 @@ export const destinations: Destination[] = [
     tags: ["colonial house", "bahay na bato", "intramuros", "museum"],
     coordinates: [14.5889, 120.9754],
     imageQuery: "Casa Manila Intramuros museum",
+    historicImageQuery: "Intramuros Manila colonial photograph",
     wikiTitle: "Casa Manila",
     shortDescription:
       "Museum of Spanish-colonial domestic life in a recreated bahay na bato house in Intramuros.",

@@ -4,21 +4,23 @@
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Fraunces", Georgia, serif;
-  --color-cream: #ffffff;
-  --color-cream-strong: #f5f5f4;
-  --color-surface: #f8fafc;
-  --color-heritage: #1c1917;
-  --color-heritage-soft: #44403c;
-  --color-accent: #ff8c42;
-  --color-ink: #0c0a09;
-  --color-muted: #78716c;
-  --color-border: #e7e5e4;
-  --color-success: #22c55e;
-  --color-leaf: #2f6b48;
-  --color-brick: #db5050;
+  --color-cream: #faf0d8;
+  --color-cream-strong: #f0dfb8;
+  --color-surface: #f5e6c8;
+  --color-parchment: #e8d4a8;
+  --color-heritage: #3d2614;
+  --color-heritage-soft: #5c3a21;
+  --color-accent: #b8743f;
+  --color-accent-deep: #8b4513;
+  --color-ink: #2d1810;
+  --color-muted: #8b6f4f;
+  --color-border: #d4b88c;
+  --color-success: #6b8e23;
+  --color-leaf: #5a7048;
+  --color-brick: #a04e2b;
   --color-gold: #c9972e;
-  --color-teal: #3b82f6;
-  --color-slate: #475569;
+  --color-teal: #4a6b7c;
+  --color-slate: #5c4d3f;
 }
 
 :root {
@@ -39,18 +41,18 @@ body,
 body {
   font-family: var(--font-sans);
   color: var(--color-ink);
-  background: #ffffff;
+  background: var(--color-cream);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 .leaflet-container {
   font-family: var(--font-sans);
-  background: #aadaff;
+  background: #c8b88c;
 }
 
 .leaflet-tile-pane {
-  filter: saturate(0.78) brightness(1.04) contrast(0.94) hue-rotate(-4deg);
+  filter: sepia(0.35) saturate(0.85) brightness(0.95) contrast(1.02) hue-rotate(-12deg);
 }
 
 .leaflet-control-zoom {
@@ -98,45 +100,50 @@ body {
   place-items: center;
   width: 30px;
   height: 30px;
-  border: 2.5px solid #ffffff;
-  border-radius: 50%;
-  color: white;
+  border: 2.5px solid var(--color-cream);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  color: var(--color-cream);
   font-size: 10px;
   font-weight: 800;
-  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
+  box-shadow: 0 6px 14px rgba(61, 38, 20, 0.4);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.knowledge-pin > * {
+  transform: rotate(45deg);
 }
 
 .knowledge-pin.selected {
   width: 38px;
   height: 38px;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(255, 140, 66, 0.35), 0 10px 24px rgba(15, 23, 42, 0.4);
+  border-color: var(--color-cream);
+  box-shadow: 0 0 0 4px rgba(184, 116, 63, 0.4), 0 10px 24px rgba(61, 38, 20, 0.5);
   z-index: 1000 !important;
 }
 
 .knowledge-pin.heritage {
-  background: #ec4899;
+  background: #8b4513;
 }
 
 .knowledge-pin.churches {
-  background: #f97316;
+  background: #a06e3f;
 }
 
 .knowledge-pin.museums {
-  background: #3b82f6;
+  background: #5c4d3f;
 }
 
 .knowledge-pin.food {
-  background: #22c55e;
+  background: #a04e2b;
 }
 
 .knowledge-pin.parks {
-  background: #10b981;
+  background: #5a7048;
 }
 
 .knowledge-pin.hidden-gems {
-  background: #8b5cf6;
+  background: #6b4226;
 }
 
 .route-pin {
@@ -171,8 +178,8 @@ body {
   height: min(74%, 720px);
   min-width: 0;
   border-radius: 24px 24px 0 0;
-  background: #ffffff;
-  box-shadow: 0 -20px 60px -10px rgba(15, 23, 42, 0.18);
+  background: var(--color-cream);
+  box-shadow: 0 -20px 60px -10px rgba(61, 38, 20, 0.3);
   overflow: hidden;
   animation: slideUp 0.25s ease-out;
 }
@@ -186,8 +193,19 @@ body {
   width: 40px;
   height: 4px;
   border-radius: 999px;
-  background: #e7e5e4;
+  background: var(--color-border);
   z-index: 20;
+}
+
+/* Filigree-style decorative divider used in sections */
+.filigree-divider {
+  background-image:
+    radial-gradient(circle at center, var(--color-accent) 1.5px, transparent 2px),
+    linear-gradient(90deg, transparent, var(--color-border) 30%, var(--color-border) 70%, transparent);
+  background-size: 12px 100%, 100% 1px;
+  background-position: center center, center center;
+  background-repeat: repeat-x, no-repeat;
+  height: 8px;
 }
 
 .panel-scroll {

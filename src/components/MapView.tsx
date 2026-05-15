@@ -7,6 +7,7 @@ import {
   Tooltip,
   ZoomControl,
   useMap,
+  useMapEvent,
 } from "react-leaflet";
 import L from "leaflet";
 import type { Destination, RouteStop } from "../types/destination";
@@ -17,6 +18,14 @@ interface MapViewProps {
   selectedId: string | null;
   routeStops: RouteStop[] | null;
   onSelect: (id: string) => void;
+  onMapTap?: () => void;
+}
+
+function MapTapHandler({ onTap }: { onTap?: () => void }) {
+  useMapEvent("click", () => {
+    onTap?.();
+  });
+  return null;
 }
 
 function FlyToSelected({
@@ -91,6 +100,7 @@ export default function MapView({
   selectedId,
   routeStops,
   onSelect,
+  onMapTap,
 }: MapViewProps) {
   const routeCoords = useMemo(() => {
     if (!routeStops?.length) return [];
@@ -136,6 +146,7 @@ export default function MapView({
       <ZoomControl position="bottomleft" />
       <FlyToSelected selectedId={selectedId} />
       <FitToRoute coords={routeCoords} />
+      <MapTapHandler onTap={onMapTap} />
 
       {places.map((place) => (
         <Marker

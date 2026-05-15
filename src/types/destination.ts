@@ -36,6 +36,10 @@ export interface Destination {
   tags: string[];
   coordinates: [number, number];
   imageQuery: string;
+  /** Wikimedia Commons filename for a reliable "Then" photo (e.g. "Fort Santiago 1880 gate.jpg") */
+  historicCommonsFile?: string;
+  /** Alternate search when no historicCommonsFile is set */
+  historicImageQuery?: string;
   wikiTitle: string;
   shortDescription: string;
   summary: string;

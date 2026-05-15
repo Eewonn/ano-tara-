@@ -31,6 +31,7 @@ interface DestinationPanelProps {
   panelView: PanelView;
   image: CommonsImage | null | undefined;
   historicImage?: CommonsImage | null | undefined;
+  historicLoading?: boolean;
   gallery?: CommonsImage[];
   imageLoading: boolean;
   imageCache: Map<string, CommonsImage>;
@@ -68,6 +69,7 @@ export default function DestinationPanel({
   panelView,
   image,
   historicImage,
+  historicLoading = false,
   gallery,
   imageLoading,
   imageCache,
@@ -111,6 +113,7 @@ export default function DestinationPanel({
       destination={destination}
       image={image}
       historicImage={historicImage}
+      historicLoading={historicLoading}
       gallery={gallery}
       imageLoading={imageLoading}
       imageCache={imageCache}
@@ -128,6 +131,7 @@ function PlaceView({
   destination,
   image,
   historicImage,
+  historicLoading = false,
   gallery,
   imageLoading,
   imageCache,
@@ -141,6 +145,7 @@ function PlaceView({
   destination: Destination;
   image: CommonsImage | null | undefined;
   historicImage?: CommonsImage | null | undefined;
+  historicLoading?: boolean;
   gallery?: CommonsImage[];
   imageLoading: boolean;
   imageCache: Map<string, CommonsImage>;
@@ -160,6 +165,7 @@ function PlaceView({
     !!historicImage &&
     (!!historicImage.thumbUrl || !!historicImage.imageUrl) &&
     historicImage.imageUrl !== image?.imageUrl;
+  const showThenToggle = hasHistoric || historicLoading;
   const [speaking, setSpeaking] = useState(false);
 
   useEffect(() => {
@@ -201,8 +207,49 @@ function PlaceView({
     setSpeaking(true);
   };
 
+  const [dragOffset, setDragOffset] = useState(0);
+  const dragStartRef = useRef<{ y: number; active: boolean } | null>(null);
+
+  const onDragStart = (clientY: number) => {
+    dragStartRef.current = { y: clientY, active: true };
+  };
+  const onDragMove = (clientY: number) => {
+    const s = dragStartRef.current;
+    if (!s?.active) return;
+    const delta = Math.max(0, clientY - s.y);
+    setDragOffset(delta);
+  };
+  const onDragEnd = () => {
+    const s = dragStartRef.current;
+    if (!s?.active) return;
+    const dismissed = dragOffset > 140;
+    dragStartRef.current = null;
+    if (dismissed) {
+      setDragOffset(0);
+      onClose();
+    } else {
+      setDragOffset(0);
+    }
+  };
+
   return (
-    <aside className="panel-shell">
+    <aside
+      className="panel-shell"
+      style={{
+        transform: dragOffset ? `translateY(${dragOffset}px)` : undefined,
+        transition: dragStartRef.current?.active ? "none" : "transform 0.2s ease-out",
+      }}
+    >
+      <div
+        className="absolute inset-x-0 top-0 z-30 h-10 cursor-grab active:cursor-grabbing"
+        onPointerDown={(e) => {
+          (e.target as Element).setPointerCapture?.(e.pointerId);
+          onDragStart(e.clientY);
+        }}
+        onPointerMove={(e) => onDragMove(e.clientY)}
+        onPointerUp={onDragEnd}
+        onPointerCancel={onDragEnd}
+      />
       <div className="panel-scroll">
         <figure className="relative h-72 overflow-hidden bg-gradient-to-br from-cream-strong to-[#e7e5e4]">
           {imageLoading ? (
@@ -236,25 +283,42 @@ function PlaceView({
             Open to visit
           </div>
 
-          {hasHistoric && (
-            <div className="absolute left-3 bottom-20 z-10 flex overflow-hidden rounded-full bg-white/95 p-0.5 text-[10px] font-semibold uppercase tracking-wider shadow-sm backdrop-blur-sm">
+          {showThenToggle && (
+            <div className="absolute left-3 top-[88px] z-10 flex items-center overflow-hidden rounded-full bg-white/95 p-0.5 text-[10px] font-semibold uppercase tracking-wider shadow-md backdrop-blur-sm">
               <button
                 type="button"
                 onClick={() => setMode("now")}
-                className={`rounded-full px-2.5 py-1 transition ${
-                  mode === "now" ? "bg-heritage text-white" : "text-heritage"
+                className={`flex items-center gap-1 rounded-full px-2.5 py-1 transition ${
+                  mode === "now" ? "bg-heritage text-white" : "text-heritage hover:bg-heritage/5"
                 }`}
               >
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-success" />
                 Now
               </button>
               <button
                 type="button"
-                onClick={() => setMode("then")}
-                className={`rounded-full px-2.5 py-1 transition ${
-                  mode === "then" ? "bg-heritage text-white" : "text-heritage"
+                onClick={() => hasHistoric && setMode("then")}
+                disabled={!hasHistoric}
+                className={`flex items-center gap-1 rounded-full px-2.5 py-1 transition ${
+                  mode === "then" && hasHistoric
+                    ? "bg-heritage text-white"
+                    : hasHistoric
+                      ? "text-heritage hover:bg-heritage/5"
+                      : "text-heritage/40 cursor-not-allowed"
                 }`}
+                aria-label={hasHistoric ? "View historic photo" : "No historic photo available"}
               >
-                Then
+                {historicLoading && !hasHistoric ? (
+                  <>
+                    <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-heritage/40" />
+                    Then…
+                  </>
+                ) : (
+                  <>
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+                    Then
+                  </>
+                )}
               </button>
             </div>
           )}
@@ -292,9 +356,11 @@ function PlaceView({
             </p>
           </div>
 
-          {hasImage && (
-            <figcaption className="absolute bottom-1 right-2 z-10 rounded bg-ink/40 px-1.5 py-0.5 text-[9px] text-cream/90">
-              Wikimedia{image?.author && ` · ${image.author}`}
+          {hasImage && activeImage && (
+            <figcaption className="absolute bottom-1 right-2 z-10 max-w-[70%] truncate rounded bg-ink/55 px-1.5 py-0.5 text-[9px] text-cream/90">
+              {showingThen && "Then · "}
+              {activeImage.license === "via Tavily" ? "Web archive" : "Wikimedia"}
+              {activeImage.author && ` · ${activeImage.author}`}
             </figcaption>
           )}
         </figure>
