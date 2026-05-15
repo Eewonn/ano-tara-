@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4E8"/>
+      <stop offset="1" stop-color="#E8D5C4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <path d="M400 120 L520 380 H280 L400 120Z" stroke="#6B3E26" stroke-width="3" fill="rgba(107,62,38,0.08)"/>
+  <circle cx="400" cy="200" r="28" stroke="#FF8C42" stroke-width="3" fill="rgba(255,140,66,0.15)"/>
+  <text x="400" y="440" text-anchor="middle" fill="#6B3E26" font-family="Georgia, serif" font-size="22">Heritage destination</text>
+</svg>
