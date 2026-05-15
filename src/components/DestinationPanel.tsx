@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   BookOpen,
+  Camera,
   Clock,
   Compass,
   ExternalLink,
@@ -481,49 +482,26 @@ function PlaceView({
             imageCache={imageCache}
             onSelect={onSelectNearby}
           />
-
-          <section className="rounded-2xl bg-white p-4 ring-1 ring-black/[0.05]">
-            <div className="mb-3 flex items-center gap-2 text-heritage">
-              <MapPin className="h-4 w-4 text-brick" />
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.12em]">
-                Saan kakain · Food nearby
-              </h3>
-            </div>
-            <ul className="space-y-2 text-sm text-ink/85">
-              {destination.foodSpots.map((item) => (
-                <li key={item} className="leading-snug">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
         </div>
       </div>
 
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white to-white/80 p-4 pt-5">
-        <button
-          type="button"
-          onClick={() => onPanelViewChange("guide")}
-          className="mb-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-accent py-3.5 text-sm font-semibold text-white shadow-[0_8px_20px_-6px_rgba(255,140,66,0.55)] transition-transform hover:scale-[1.01]"
-        >
-          <Compass className="h-4 w-4" />
-          Guide me like a local
-        </button>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => onPanelViewChange("route")}
-            className="rounded-2xl bg-white py-2.5 text-sm font-semibold text-heritage ring-1 ring-black/[0.08] transition hover:ring-heritage/30"
+            onClick={() => onPanelViewChange("guide")}
+            className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-accent py-3.5 text-sm font-semibold text-white shadow-[0_8px_20px_-6px_rgba(255,140,66,0.55)] transition-transform hover:scale-[1.01]"
           >
-            Plan my route
+            <Compass className="h-4 w-4" />
+            Ask the local guide
           </button>
           <button
             type="button"
-            onClick={() => onPanelViewChange("promote")}
-            className="flex items-center justify-center gap-1.5 rounded-2xl bg-white py-2.5 text-sm font-semibold text-heritage ring-1 ring-black/[0.08] transition hover:ring-heritage/30"
+            onClick={() => onPanelViewChange("route")}
+            className="rounded-2xl bg-white px-4 py-3.5 text-sm font-semibold text-heritage ring-1 ring-black/[0.08] transition hover:ring-heritage/30"
+            aria-label="Plan a route"
           >
-            <Share2 className="h-4 w-4" />
-            Promote
+            Route
           </button>
         </div>
       </div>

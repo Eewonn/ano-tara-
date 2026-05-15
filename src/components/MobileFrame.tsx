@@ -26,7 +26,7 @@ export default function MobileFrame({ children }: { children: React.ReactNode })
       <div className="flex flex-col items-center gap-4">
         <div className="text-center">
           <p className="font-serif text-2xl font-semibold text-cream">AnoTara</p>
-          <p className="text-xs text-cream/60">Mobile preview · resize browser to fullscreen</p>
+          <p className="text-xs text-cream/60">Philippine stories on the map</p>
         </div>
 
         <div

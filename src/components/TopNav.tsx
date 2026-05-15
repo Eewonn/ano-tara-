@@ -4,12 +4,11 @@ import type { FilterChip } from "../types/destination";
 const FILTERS: { id: FilterChip; label: string }[] = [
   { id: "all", label: "All" },
   { id: "heritage", label: "Heritage" },
-  { id: "food", label: "Food" },
-  { id: "museums", label: "Museums" },
   { id: "churches", label: "Churches" },
+  { id: "museums", label: "Museums" },
+  { id: "food", label: "Food districts" },
   { id: "parks", label: "Parks" },
-  { id: "hidden-gems", label: "Hidden Gems" },
-  { id: "walking-route", label: "Walking Route" },
+  { id: "hidden-gems", label: "Hidden gems" },
 ];
 
 interface TopNavProps {
@@ -40,6 +39,11 @@ export default function TopNav({
             aria-label="Search destinations"
             className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-muted"
           />
+          {(searchQuery || activeFilter !== "all") && (
+            <span className="shrink-0 rounded-full bg-heritage/8 px-2 py-0.5 text-[10px] font-semibold text-heritage">
+              {visibleCount}
+            </span>
+          )}
         </div>
 
         <div className="pointer-events-auto -mx-3 flex items-center gap-2 overflow-x-auto px-3 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

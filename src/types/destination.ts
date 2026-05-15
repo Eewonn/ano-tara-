@@ -13,8 +13,7 @@ export type FilterChip =
   | "museums"
   | "churches"
   | "parks"
-  | "hidden-gems"
-  | "walking-route";
+  | "hidden-gems";
 
 export interface RouteStop {
   destinationId: string;

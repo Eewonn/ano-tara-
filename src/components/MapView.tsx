@@ -52,10 +52,26 @@ function FitToRoute({ coords }: { coords: [number, number][] }) {
   return null;
 }
 
+const CATEGORY_SVG: Record<string, string> = {
+  heritage:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-7h6v7"/></svg>',
+  churches:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M10 9h4M12 7v6M6 21V11l6-4 6 4v10M9 21v-5h6v5"/></svg>',
+  museums:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 21h18M3 10l9-6 9 6M5 21V10m4 11V10m6 11V10m4 11V10"/></svg>',
+  food:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 3v6c0 1.7 1.3 3 3 3v9M6 3v6M9 3v6M15 12c1.7 0 3-1.3 3-3l-3-6v18"/></svg>',
+  parks:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 2L4 14h5l-3 6h12l-3-6h5L12 2z"/></svg>',
+  "hidden-gems":
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M11 3l-2 6h6l-2-6M2 9h20"/></svg>',
+};
+
 function createPinIcon(place: Destination, selected: boolean) {
+  const icon = CATEGORY_SVG[place.category] ?? `<span>${place.initials}</span>`;
   return L.divIcon({
     className: "",
-    html: `<div class="knowledge-pin ${place.category}${selected ? " selected" : ""}"><span>${place.initials}</span></div>`,
+    html: `<div class="knowledge-pin ${place.category}${selected ? " selected" : ""}">${icon}</div>`,
     iconSize: selected ? [38, 38] : [32, 32],
     iconAnchor: selected ? [19, 38] : [16, 32],
   });

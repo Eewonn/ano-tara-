@@ -9,11 +9,7 @@ export function filterDestinations(
 
   return destinations.filter((place) => {
     const matchesFilter =
-      activeFilter === "all"
-        ? true
-        : activeFilter === "walking-route"
-          ? place.walkingRoute === true
-          : place.category === activeFilter;
+      activeFilter === "all" ? true : place.category === activeFilter;
 
     if (!matchesFilter) return false;
 

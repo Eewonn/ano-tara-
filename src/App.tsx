@@ -6,6 +6,7 @@ import BottomTabs from "./components/BottomTabs";
 import EatsView from "./components/EatsView";
 import RoutesView from "./components/RoutesView";
 import SavedView from "./components/SavedView";
+import Onboarding, { shouldShowOnboarding } from "./components/Onboarding";
 import {
   destinationById,
   getNearbyDestinations,
@@ -27,6 +28,7 @@ const DEFAULT_ID = "intramuros";
 
 export default function App() {
   const [tab, setTab] = useState<AppTab>("stories");
+  const [showOnboarding, setShowOnboarding] = useState(() => shouldShowOnboarding());
   const [selectedId, setSelectedId] = useState<string | null>(DEFAULT_ID);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterChip>("all");
@@ -198,6 +200,8 @@ export default function App() {
       )}
 
       <BottomTabs active={tab} onChange={setTab} savedCount={saved.size} />
+
+      {showOnboarding && <Onboarding onDone={() => setShowOnboarding(false)} />}
     </div>
   );
 }
